@@ -1,6 +1,6 @@
 close all; clear all; clc;
 load('speech.mat')
-
+%%
 yhat = zeros(size(y));
 
 order = 12;
@@ -38,4 +38,5 @@ for segment = [0:segments-1]
     yhat(segment*len+1:(segment+1)*len) = filter(1,mod.a, ehat);
 end
 
+%%
 sound(50*yhat, 8000)
