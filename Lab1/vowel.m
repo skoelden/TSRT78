@@ -39,7 +39,7 @@ clf
 hold on
 plot(freq, abs(AAA(1:length(freq))))
 plot(freq, abs(OOO(1:length(freq))))
-title('Power spectrum of signal')
+title('DFT of signals')
 xlabel('Frequency (Hz)')
 legend('A', 'O')
 hold off
@@ -59,7 +59,7 @@ Ainput(1:floor(fSamp/aFreq):end) = 1;
 Oinput = zeros(2*fSamp,1);
 Oinput(1:floor(fSamp/oFreq):end) = 1;
 
-orderA = [5, 12, 16];
+orderA = [5, 12, 40];
 orderB = [5, 12, 18];
 
 figure(3)
@@ -102,10 +102,10 @@ setoptions(h2,'FreqUnits','Hz','FreqScale','log','Xlim',{[10 4000]},'MagUnits','
 aFreq = 114;
 oFreq = 162;
 
-modA = ar(aaa, 5);
-modA16 = ar(aaa, 16);
-modO = ar(ooo , 8);
-modO18 = ar(ooo , 18);
+modA = ar(aaaEst, 12);
+modA18 = ar(aaaEst, 18);
+modO = ar(oooEst , 5);
+modO18 = ar(oooEst , 18);
 
 Ainput = zeros(2*fSamp,1);
 Ainput(1:floor(fSamp/aFreq):end) = 1;
@@ -114,7 +114,7 @@ Oinput = zeros(2*fSamp,1);
 Oinput(1:floor(fSamp/oFreq):end) = 1;
 
 aaasim = sim(modA, Ainput);
-aaasim16 = sim(modA16, Ainput);
+aaasim16 = sim(modA18, Ainput);
 ooosim = sim(modO, Oinput);
 ooosim18 = sim(modO18, Oinput);
 
@@ -151,8 +151,11 @@ hold off
 %% Play sounds
 sound(30*aaasim, fSamp)
 pause(2.5);
+%%
 sound(30*aaasim16, fSamp)
 pause(2.5)
+%%
 sound(30*ooosim, fSamp)
 pause(2.5);
+%%
 sound(30*ooosim18, fSamp)
