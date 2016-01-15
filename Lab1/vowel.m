@@ -5,17 +5,23 @@ load('vowel.mat');
 aaa = aaa([fSamp*2:fSamp*4]);
 ooo = ooo([fSamp*3:fSamp*5]);
 
+aaaest = aaa(1:floor(2*end/3));
+aaaval = aaa(ceil(2*end/3:end));
+
+oooest = ooo(1:floor(2*end/3));
+oooval = ooo(ceil(2*end/3:end));
+
 %% Estimate model order
 maxModelOrder = 30;
 modAloss = zeros(maxModelOrder,1);
 modOloss = zeros(maxModelOrder,1);
 
 for(modelOrder = [1:maxModelOrder])
-    modA = ar(aaa, modelOrder);
-    modO = ar(ooo, modelOrder);
+    modA = ar(aaaest, modelOrder);
+    modO = ar(oooest, modelOrder);
     
-    modAloss(modelOrder) = sum(resid(modA, aaa).^2);
-    modOloss(modelOrder) = sum(resid(modO, ooo).^2);
+    modAloss(modelOrder) = mean(resid(modA, aaaval).^2);
+    modOloss(modelOrder) = mean(resid(modO, oooval).^2);
 end
 
 figure(1)

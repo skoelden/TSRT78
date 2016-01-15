@@ -16,7 +16,7 @@ for segment = [0:segments-1]
     for i = [1:order]
         ab = abs(rot(i)); 
         if(ab>1)
-            rot(i) = 1/ab*rot(i);
+            rot(i) = 1/(ab^2)*rot(i);
         end
     end
     
